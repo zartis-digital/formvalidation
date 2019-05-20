@@ -16,7 +16,7 @@ const useValidation = (validation, initialState = {}) => {
   const [data, setData] = React.useState(initialState)
   const [errors, setErrors] = React.useState({})
   const [isSubmitting, setIsSubmitting] = React.useState(false)
-
+console.log(data)
   React.useEffect(() => {
     if (!isSubmitting) return;
     setErrors(
@@ -59,7 +59,7 @@ const useValidation = (validation, initialState = {}) => {
   }
 
   const clearFields = () => {
-    setData({});
+    setData(initialState);
     setIsSubmitting(false);
   }
 

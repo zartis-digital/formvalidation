@@ -1,7 +1,12 @@
 .error {
     border: solid red 1px;
 }
-
+.hide { display: none; height: 0; }
+.hide2 { background-color: red; }
+.form {
+    padding: 60px;
+    transition: height 500ms;
+}
 .errorMsg {
     color: red;
 }

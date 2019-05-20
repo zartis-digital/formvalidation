@@ -8,13 +8,11 @@ const validation = {
   name: 'required',
   email: 'required email',
   lastname: 'required',
-  age: 'required',
 };
 
-export default () => {
-  const { userData } = React.useContext(UserContext)
-  const { data, errors, handleBlur, handleFocus, handleChange, handleSubmit, clearFields } = useValidation(validation, userData);
- console.log(userData)
+export default (user) => {
+  // const { userData } = React.useContext(UserContext)
+  const { data, errors, handleBlur, handleFocus, handleChange, handleSubmit, clearFields } = useValidation(validation, user);
   return (
     <form
       onSubmit={ handleSubmit }
