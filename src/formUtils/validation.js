@@ -43,21 +43,21 @@ const useValidation = (validation, initialState = {}, cb) => {
     }
   }, [data])
 
-  const clearFields = () => {
-    setData(initialState);
-    setIsSubmitting(false);
-  }
-
   React.useEffect(() => {
     if (isSubmitting) {
       const noErrors = Object.keys(errors).length === 0;
       if (noErrors) {
         cb(data);
-        clearFields();
+        setData(initialState);
       }
       setIsSubmitting(false);
     }
   }, [errors])
+
+  const clearFields = () => {
+    setData(initialState);
+    setIsSubmitting(false);
+  }
 
   const handleChange = e => {
     setData({
