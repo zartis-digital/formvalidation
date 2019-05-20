@@ -17,13 +17,6 @@ const useValidation = (validation, initialState = {}) => {
   const [errors, setErrors] = React.useState({})
   const [isSubmitting, setIsSubmitting] = React.useState(false)
 
-  const handleChange = e => {
-    setData({
-      ...data,
-      [e.target.name]: e.target.value,
-    })
-  }
-
   React.useEffect(() => {
     if (!isSubmitting) return;
     setErrors(
@@ -48,12 +41,37 @@ const useValidation = (validation, initialState = {}) => {
     )
   }, [data, isSubmitting])
 
+  const handleChange = e => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const handleFocus = () => {
+
+  }
   const handleBlur = () => {}
+
   const handleSubmit = e => {
     e.preventDefault();
     setIsSubmitting(true);
   }
-  return { data, errors, handleChange, handleBlur, handleSubmit } ;
+
+  const clearFields = () => {
+    setData({});
+    setIsSubmitting(false);
+  }
+
+  return {
+    data,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    clearFields,
+    handleFocus
+  }
 }
 
 export default useValidation;
