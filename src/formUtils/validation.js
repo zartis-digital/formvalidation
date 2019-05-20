@@ -8,6 +8,7 @@ const evalFns = {
   email:
     txt => {
       const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (!txt || txt.length === 0) return false;
       return !re.test(String(txt).toLowerCase()) && 'This field must be an e-mail address';
     }
 }
@@ -17,29 +18,38 @@ const useValidation = (validation, initialState = {}, cb) => {
   const [errors, setErrors] = React.useState({})
   const [isSubmitting, setIsSubmitting] = React.useState(false)
 
-  React.useEffect(() => {
-    if (!isSubmitting) return;
-    setErrors(
-      Object.entries(validation).reduce(
-        (acc, cur) => {
-          const [key, value] = cur;
-          try {
-            const evaluatedArr = value
-            .split(" ")
-            .forEach(
-              valItem => {
-                const result = evalFns[valItem](data[key]);
-                if (result) throw result;
-              }
-            )
-          } catch (error) {
-            acc[key] = error
+  const validate = () => Object.entries(validation).reduce(
+    (acc, cur) => {
+      const [key, value] = cur;
+      try {
+        const evaluatedArr = value
+        .split(" ")
+        .forEach(
+          valItem => {
+            const result = evalFns[valItem](data[key]);
+            if (result) throw result;
           }
-          return acc;
-        }, {}
-      )
-    )
-  })
+        )
+      } catch (error) {
+        acc[key] = error
+      }
+      return acc;
+    }, {}
+  )
+
+  React.useEffect(() => {
+    setErrors(validate());
+  }, [data])
+
+  React.useEffect(() => {
+    if (isSubmitting) {
+      const noErrors = Object.keys(errors).length === 0;
+      if (noErrors) {
+        cb(data);
+      }
+      setIsSubmitting(false);
+    }
+  }, [errors])
 
   const handleChange = e => {
     setData({
@@ -50,7 +60,7 @@ const useValidation = (validation, initialState = {}, cb) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (isSubmitting && Object.keys(errors).length === 0) cb(data)
+    setErrors(validate());
     setIsSubmitting(true);
   }
 

@@ -9,10 +9,10 @@ const UserList = ({ users }) => {
     <ul>
       {
         users.map(user => {
-          const { name, lastname, id } = user;
+          const { name, lastname, age = '-', email = '-', id } = user;
           return (
             <li key={ id }>
-              { `${lastname}, ${name}` }
+              { `${lastname}, ${name}: ${age} (${email})` }
               <button
                 type="button"
                 onClick={ () => setIsEditing(id) }

@@ -6,7 +6,7 @@ import './app.css';
 
 const validation = {
   name: 'required',
-  email: 'required',
+  email: 'email',
   lastname: 'required',
 };
 

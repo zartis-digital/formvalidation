@@ -10,11 +10,12 @@ const initUsers = [
 ]
 function App() {
   const [users, setUsers] = React.useState(initUsers)
-  const updateData = ({ name, lastname, email, id }) => {
+  const updateData = ({ name, lastname, email, age, id }) => {
+    console.log("here")
     setUsers([
       ...users.map(user => {
         if (user.id === id) {
-          return ({ name, lastname, email, id })
+          return ({ name, lastname, email, age, id })
         }
         return user
       })
