@@ -17,7 +17,11 @@ export default (user) => {
 
   return (
     <form
-      onSubmit={ handleSubmit }
+      onSubmit={ () => {
+
+        debugger;
+        handleSubmit();
+      } }
     >
       <TextInput
         name="name"
