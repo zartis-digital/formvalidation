@@ -21,8 +21,9 @@ const ListItem = user => {
 
   return (
     <li key={ id } ref={ container }>
-      { `${lastname}, ${name}: ${age} (${email})` }
+      <span className="user">{ `${lastname}, ${name}: ${age} (${email})` }</span>
       <button
+        className="edit"
         type="button"
         disabled={ isEditing }
         onClick={ () => setIsEditing(id) }

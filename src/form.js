@@ -17,11 +17,7 @@ export default (user) => {
 
   return (
     <form
-      onSubmit={ () => {
-
-        debugger;
-        handleSubmit();
-      } }
+      onSubmit={ handleSubmit }
     >
       <TextInput
         name="name"
@@ -57,7 +53,7 @@ export default (user) => {
         error={ errors.age }
       />
       <input type="submit" disabled={ !canSubmit } />
-      <button type="button" onClick={ clearFields }>Clear fields</button>
+      <button type="button" className="clear" onClick={ clearFields }>Clear fields</button>
     </form>
   )
 }
