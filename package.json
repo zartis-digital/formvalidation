@@ -23,23 +23,6 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json",
-      "vue"
-    ],
-    "transform": {
-      "^.+\\.(js|jsx)?$": "babel-jest"
-    },
-    "snapshotSerializers": [
-      "enzyme-to-json/serializer"
-    ],
-    "transformIgnorePatterns": [
-      "<rootDir>/node_modules/"
-    ]
-  },
   "lint-staged": {
     "*.{js,jsx}": [
       "pretty-quick --staged",
