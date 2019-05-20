@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
 import React from 'react';
 
 const evalFns = {
@@ -7,7 +5,7 @@ const evalFns = {
     txt => (!txt || txt.length === 0) && 'This field is required',
   email:
     txt => {
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const re = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
       if (!txt || txt.length === 0) return false;
       return !re.test(String(txt).toLowerCase()) && 'This field must be an e-mail address';
     }
@@ -15,48 +13,47 @@ const evalFns = {
 
 const useValidation = (validation, initialState = {}, cb) => {
   const [data, setData] = React.useState(initialState)
+  const [touched, setTouched] = React.useState([])
+  const [canSubmit, setCanSubmit] = React.useState()
   const [errors, setErrors] = React.useState({})
-  const [isSubmitting, setIsSubmitting] = React.useState(false)
 
-  const validate = () => Object.entries(validation).reduce(
-    (acc, cur) => {
-      const [key, value] = cur;
-      try {
-        const evaluatedArr = value
-        .split(" ")
-        .forEach(
-          valItem => {
-            const result = evalFns[valItem](data[key]);
-            if (result) throw result;
+  const validate = React.useCallback(
+    () => Object.entries(validation)
+      .reduce(
+        (acc, cur) => {
+          const [key, value] = cur;
+          if (!touched.includes(key)) return acc;
+          try {
+            value
+            .split(" ")
+            .forEach(
+              valItem => {
+                const result = evalFns[valItem](data[key]);
+                if (result) throw result;
+              }
+            )
+          } catch (error) {
+            acc[key] = error
           }
-        )
-      } catch (error) {
-        acc[key] = error
-      }
-      return acc;
-    }, {}
+          return acc;
+        }, {}
+    ), [validation, touched, data]
   )
 
-  React.useEffect(() => {
-    if (isSubmitting) {
-      setErrors(validate());
-    }
-  }, [data])
+  React.useEffect(
+    () => {
+      setCanSubmit(Object.keys(errors).length === 0)
+    }, [errors]
+  )
 
-  React.useEffect(() => {
-    if (isSubmitting) {
-      const noErrors = Object.keys(errors).length === 0;
-      if (noErrors) {
-        cb(data);
-        setData(initialState);
-      }
-      setIsSubmitting(false);
-    }
-  }, [errors])
+  React.useEffect(
+    () => {
+      setErrors(validate());
+    }, [data, validate]
+  )
 
   const clearFields = () => {
     setData(initialState);
-    setIsSubmitting(false);
   }
 
   const handleChange = e => {
@@ -66,10 +63,18 @@ const useValidation = (validation, initialState = {}, cb) => {
     })
   }
 
+  const handleBlur = e => {
+    const { name } = e.target
+    if (touched.includes(name)) return
+    setTouched([
+      ...touched,
+      name,
+    ])
+  }
+
   const handleSubmit = e => {
     e.preventDefault();
-    setErrors(validate());
-    setIsSubmitting(true);
+    cb(data);
   }
 
   return {
@@ -78,6 +83,8 @@ const useValidation = (validation, initialState = {}, cb) => {
     handleChange,
     handleSubmit,
     clearFields,
+    canSubmit,
+    handleBlur,
   }
 }
 

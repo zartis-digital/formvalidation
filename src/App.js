@@ -4,7 +4,7 @@ import UserList from './userList'
 import Form from './form';
 
 const initUsers = [
-  {name: 'Peter', lastname: 'Smith', id: 1 },
+  {name: 'Peter', lastname: 'Smith', id: 1, email: 'peter@yahoo.com', age: 21 },
   {name: 'Paul', lastname: 'Dow', id: 2 },
   {name: 'Luke', lastname: 'Johnson', id: 3 },
   {name: 'Matthew', lastname: 'Richards', id: 4 },

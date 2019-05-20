@@ -12,7 +12,9 @@ const validation = {
 
 export default (user) => {
   const { updateData } = React.useContext(UserContext);
-  const { data, errors, handleChange, handleSubmit, clearFields } = useValidation(validation, user, updateData);
+
+  const { data, errors, handleChange, handleSubmit, clearFields, canSubmit, handleBlur } = useValidation(validation, user, updateData);
+
   return (
     <form
       onSubmit={ handleSubmit }
@@ -21,6 +23,7 @@ export default (user) => {
         name="name"
         label="Name"
         handleChange={ handleChange }
+        handleBlur={ handleBlur }
         value={ data.name }
         error={ errors.name }
       />
@@ -28,6 +31,7 @@ export default (user) => {
         name="lastname"
         label="Last name"
         handleChange={ handleChange }
+        handleBlur={ handleBlur }
         value={ data.lastname }
         error={ errors.lastname }
       />
@@ -35,6 +39,7 @@ export default (user) => {
         name="email"
         label="E-mail"
         handleChange={ handleChange }
+        handleBlur={ handleBlur }
         value={ data.email }
         error={ errors.email }
       />
@@ -42,11 +47,12 @@ export default (user) => {
         name="age"
         label="Age"
         handleChange={ handleChange }
+        handleBlur={ handleBlur }
         value={ data.age }
         values={ [ '', 19, 20, 21, 22] }
         error={ errors.age }
       />
-      <input type="submit"/>
+      <input type="submit" disabled={ !canSubmit } />
       <button type="button" onClick={ clearFields }>Clear fields</button>
     </form>
   )

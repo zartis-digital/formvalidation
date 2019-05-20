@@ -1,35 +1,14 @@
 import React from 'react';
-import Form from '../form';
+import ListItem from './listItem';
 
 import '../app.css';
 
-const UserList = ({ users }) => {
-  const [isEditing, setIsEditing] = React.useState()
-  return (
-    <ul>
-      {
-        users.map(user => {
-          const { name, lastname, age = 'n/a', email = 'n/a', id } = user;
-          return (
-            <li key={ id }>
-              { `${lastname}, ${name}: ${age} (${email})` }
-              <button
-                type="button"
-                onClick={ () => setIsEditing(id) }
-              >
-                Edit
-              </button>
-              {
-                isEditing === id && (
-                  <Form {...user} />
-                )
-              }
-            </li>
-          )
-        })
-      }
-    </ul>
-  )
-}
+const UserList = ({ users }) => (
+  <ul>
+    {
+      users.map(user => <ListItem {...user} key={ user.id }/>)
+    }
+  </ul>
+)
 
 export default UserList;
