@@ -38,14 +38,22 @@ const useValidation = (validation, initialState = {}, cb) => {
   )
 
   React.useEffect(() => {
-    setErrors(validate());
+    if (isSubmitting) {
+      setErrors(validate());
+    }
   }, [data])
+
+  const clearFields = () => {
+    setData(initialState);
+    setIsSubmitting(false);
+  }
 
   React.useEffect(() => {
     if (isSubmitting) {
       const noErrors = Object.keys(errors).length === 0;
       if (noErrors) {
         cb(data);
+        clearFields();
       }
       setIsSubmitting(false);
     }
@@ -62,11 +70,6 @@ const useValidation = (validation, initialState = {}, cb) => {
     e.preventDefault();
     setErrors(validate());
     setIsSubmitting(true);
-  }
-
-  const clearFields = () => {
-    setData(initialState);
-    setIsSubmitting(false);
   }
 
   return {

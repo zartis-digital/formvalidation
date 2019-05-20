@@ -1,25 +1,35 @@
 import React from 'react';
 import UserContext from './context'
 import UserList from './userList'
+import Form from './form';
 
 const initUsers = [
-  {name: 'A', lastname: 'B', id: 1 },
-  {name: 'A2', lastname: 'B2', id: 2 },
-  {name: 'A4', lastname: 'B4', id: 3 },
-  {name: 'A5', lastname: 'B5', id: 4 },
+  {name: 'Peter', lastname: 'Smith', id: 1 },
+  {name: 'Paul', lastname: 'Dow', id: 2 },
+  {name: 'Luke', lastname: 'Johnson', id: 3 },
+  {name: 'Matthew', lastname: 'Richards', id: 4 },
 ]
 function App() {
   const [users, setUsers] = React.useState(initUsers)
   const updateData = ({ name, lastname, email, age, id }) => {
-    console.log("here")
-    setUsers([
-      ...users.map(user => {
-        if (user.id === id) {
-          return ({ name, lastname, email, age, id })
-        }
-        return user
-      })
-    ])
+    const index = users.findIndex(
+      user => user.id === id
+    );
+    if (index < 0) {
+      setUsers([
+        ...users,
+        ({ name, lastname, email, age, id: users.length + 1 }) 
+      ])
+    } else {
+      setUsers([
+        ...users.map(user => {
+          if (user.id === id) {
+            return ({ name, lastname, email, age, id })
+          }
+          return user
+        })
+      ])
+    }
   }
   return (
     <div className="App">
@@ -29,6 +39,7 @@ function App() {
         }
       >
         <UserList users={ users } />
+        <Form />
      </UserContext.Provider>
     </div>
   );

@@ -9,7 +9,7 @@ const UserList = ({ users }) => {
     <ul>
       {
         users.map(user => {
-          const { name, lastname, age = '-', email = '-', id } = user;
+          const { name, lastname, age = 'n/a', email = 'n/a', id } = user;
           return (
             <li key={ id }>
               { `${lastname}, ${name}: ${age} (${email})` }
