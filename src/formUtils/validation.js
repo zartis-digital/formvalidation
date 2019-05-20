@@ -12,11 +12,11 @@ const evalFns = {
     }
 }
 
-const useValidation = (validation, initialState = {}) => {
+const useValidation = (validation, initialState = {}, cb) => {
   const [data, setData] = React.useState(initialState)
   const [errors, setErrors] = React.useState({})
   const [isSubmitting, setIsSubmitting] = React.useState(false)
-console.log(data)
+
   React.useEffect(() => {
     if (!isSubmitting) return;
     setErrors(
@@ -39,7 +39,7 @@ console.log(data)
         }, {}
       )
     )
-  }, [data, isSubmitting])
+  })
 
   const handleChange = e => {
     setData({
@@ -48,13 +48,9 @@ console.log(data)
     })
   }
 
-  const handleFocus = () => {
-
-  }
-  const handleBlur = () => {}
-
   const handleSubmit = e => {
     e.preventDefault();
+    if (isSubmitting && Object.keys(errors).length === 0) cb(data)
     setIsSubmitting(true);
   }
 
@@ -67,10 +63,8 @@ console.log(data)
     data,
     errors,
     handleChange,
-    handleBlur,
     handleSubmit,
     clearFields,
-    handleFocus
   }
 }
 
