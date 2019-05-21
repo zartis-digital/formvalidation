@@ -18,7 +18,7 @@ function ensureSlash(inputPath, needsSlash) {
   } if (!hasSlash && needsSlash) {
     return `${inputPath}/`;
   } 
-    return inputPath;
+  return inputPath;
   
 }
 

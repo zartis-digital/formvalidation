@@ -33,7 +33,7 @@ const useValidation = (validation, initialState = {}, cb) => {
               .forEach(
                 valItem => {
                   const result = evalFns[valItem](data[key]);
-                  if (result) throw result;
+                  if (result) {throw result;}
                 }
               );
           } catch (error) {
@@ -41,7 +41,7 @@ const useValidation = (validation, initialState = {}, cb) => {
           }
           return acc;
         }, {}
-    ), [validation, touched, data]
+      ), [validation, touched, data]
   );
 
   React.useEffect(
