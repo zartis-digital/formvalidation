@@ -11,10 +11,13 @@
         ],
         "react/prop-types": 0,
         "no-underscore-dangle": 0,
+        "no-param-reassign": 0,
+        "no-undef": "off",
         "import/imports-first": ["error", "absolute-first"],
         "import/newline-after-import": "error"
     },
     "globals": {
+        "fetch": true,
         "window": true,
         "document": true,
         "localStorage": true,

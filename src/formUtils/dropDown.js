@@ -12,7 +12,7 @@ export default ({ name, handleChange, value, error, values, label }) => (
       name={ name }
     >
       {
-        values.map(e => (
+        values && values.map(e => (
           <option key={ e }>{ e }</option>
         ))
       }
