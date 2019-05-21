@@ -32,10 +32,10 @@ const ListItem = user => {
   );
 
   return (
-    <li key={ id } ref={ container }>
+    <li key={ id } className="list-group-item" ref={ container }>
       <span className="user">{ `${lastname}, ${name}: ${age} (${email})` }</span>
       <button
-        className="edit"
+        className="edit btn btn-outline-secondary btn-sm ml-1"
         type="button"
         disabled={ isEditing }
         onClick={ () => setIsEditing(true) }

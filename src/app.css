@@ -1,4 +1,6 @@
 
+body {
+}
 .error {
     border: solid red 1px;
 }
@@ -9,6 +11,15 @@
 }
 .errorMsg {
     color: red;
+}
+
+
+.zartis {
+    text-align: center;
+}
+.zartis img {
+    margin-bottom: 40px;
+    width: 100px;
 }
 
 

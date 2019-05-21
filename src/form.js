@@ -16,7 +16,9 @@ export default (user) => {
   const { data, errors, handleChange, handleSubmit, clearFields, canSubmit, handleBlur } = useValidation(validation, user, updateData);
 
   return (
+
     <form
+      className="form-groupº"
       onSubmit={ handleSubmit }
     >
       <TextInput
@@ -52,8 +54,8 @@ export default (user) => {
         values={ [ '', 19, 20, 21, 22] }
         error={ errors.age }
       />
-      <input type="submit" disabled={ !canSubmit } />
-      <button type="button" className="clear" onClick={ clearFields }>Clear fields</button>
+      <input className="btn btn-outline-secondary btn-sm ml-1" type="submit" disabled={ !canSubmit } />
+      <button type="button" className="ml-1 clear btn btn-outline-secondary btn-sm" onClick={ clearFields }>Clear fields</button>
     </form>
   );
 };

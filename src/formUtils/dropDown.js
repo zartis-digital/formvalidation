@@ -7,6 +7,7 @@ export default ({ name, handleChange, value, error, values, label }) => (
   >
     { label }: 
     <select
+      className="mx-1"
       onChange={ handleChange }
       value={ value }
       name={ name }

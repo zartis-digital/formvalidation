@@ -4,6 +4,7 @@ import '../app.css';
 export default ({ name, handleBlur, handleChange, label, value, error }) => (
   <label
     htmlFor = { name }
+    className="mr-2"
   >
     { label }: 
     <input
@@ -12,7 +13,7 @@ export default ({ name, handleBlur, handleChange, label, value, error }) => (
       onBlur={ handleBlur }
       onChange={ handleChange }
       value={ value || '' }
-      className={ error && 'error' }
+      className={ `form-control ${error && 'error'}` }
     />
     { error && (<p className="errorMsg">{ error }</p>) }
   </label>

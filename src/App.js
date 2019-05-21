@@ -34,7 +34,11 @@ function App() {
   };
  
   return (
-    <div className="App">
+    <div className="jumbotron App">
+      <div className="zartis">
+        <img  alt="zartis" src="zartis.png" />
+
+      </div>
       <UserContext.Provider
         value={
           { updateData }
