@@ -1,16 +1,18 @@
 import React from 'react';
 import UserContext from './context'
-import UserList from './userList'
+import { UserList } from './userList'
 import Form from './form';
 
 const initUsers = [
-  {name: 'Peter', lastname: 'Smith', id: 1, email: 'peter@yahoo.com', age: 21 },
-  {name: 'Paul', lastname: 'Dow', id: 2 },
-  {name: 'Luke', lastname: 'Johnson', id: 3 },
-  {name: 'Matthew', lastname: 'Richards', id: 4 },
+  { name: 'Peter',   lastname: 'Smith',    id: 1, email: 'peter@yahoo.com',   age: 21 },
+  { name: 'Paul',    lastname: 'Dow',      id: 2, email: 'paul@yahoo.com',    age: 20 },
+  { name: 'Luke',    lastname: 'Johnson',  id: 3, email: 'luke@yahoo.com',    age: 19 },
+  { name: 'Matthew', lastname: 'Richards', id: 4, email: 'matthew@yahoo.com', age: 21 },
 ]
+
 function App() {
   const [users, setUsers] = React.useState(initUsers)
+
   const updateData = ({ name, lastname, email, age, id }) => {
     const index = users.findIndex(
       user => user.id === id
@@ -31,11 +33,12 @@ function App() {
       ])
     }
   }
+ 
   return (
     <div className="App">
       <UserContext.Provider
         value={
-          {updateData}
+          { updateData }
         }
       >
         <UserList users={ users } />

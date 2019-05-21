@@ -1,14 +1,7 @@
-import React from 'react';
-import ListItem from './listItem';
+import ListItem from './listItem'
+import UserList from './userList'
 
-import '../app.css';
-
-const UserList = ({ users }) => (
-  <ul>
-    {
-      users.map(user => <ListItem {...user} key={ user.id }/>)
-    }
-  </ul>
-)
-
-export default UserList;
+export {
+    ListItem,
+    UserList,
+}
