@@ -29,13 +29,13 @@ const useValidation = (validation, initialState = {}, cb) => {
           }
           try {
             value
-            .split(" ")
-            .forEach(
-              valItem => {
-                const result = evalFns[valItem](data[key]);
-                if (result) throw result;
-              }
-            );
+              .split(' ')
+              .forEach(
+                valItem => {
+                  const result = evalFns[valItem](data[key]);
+                  if (result) throw result;
+                }
+              );
           } catch (error) {
             acc[key] = error;
           }

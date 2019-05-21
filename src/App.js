@@ -4,10 +4,10 @@ import { UserList } from './userList';
 import Form from './form';
 
 const initUsers = [
-  { name: 'Peter',   lastname: 'Smith',    id: 1, email: 'peter@yahoo.com',   age: 21 },
-  { name: 'Paul',    lastname: 'Dow',      id: 2, email: 'paul@yahoo.com',    age: 20 },
-  { name: 'Luke',    lastname: 'Johnson',  id: 3, email: 'luke@yahoo.com',    age: 19 },
-  { name: 'Matthew', lastname: 'Richards', id: 4, email: 'matthew@yahoo.com', age: 21 },
+  { name: 'Peter',   lastname: 'Smith',    id: 1, email: 'peter@zartis.com',   age: 21 },
+  { name: 'Paul',    lastname: 'Dow',      id: 2, email: 'paul@zartis.com',    age: 20 },
+  { name: 'Luke',    lastname: 'Johnson',  id: 3, email: 'luke@zartis.com',    age: 19 },
+  { name: 'Matthew', lastname: 'Richards', id: 4, email: 'matthew@zartis.com', age: 21 },
 ];
 
 function App() {
