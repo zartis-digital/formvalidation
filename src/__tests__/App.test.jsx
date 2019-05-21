@@ -14,7 +14,6 @@ const funcBlur = jest.fn();
 const error = 'I am error';
 
 
-
 describe('Should pass tests', () => {
 
   // hello word to my tests!
@@ -54,7 +53,6 @@ describe('Should pass tests', () => {
       });
     });
 
-
     describe('DropDown', () => {
 
       it('Should render even without values', ()  => {
@@ -73,8 +71,6 @@ describe('Should pass tests', () => {
 
       });
 
-
-
       it('Should display an error when passed as prop', ()  => {
         const container = shallow(<DropDown
           error={error}
@@ -82,24 +78,14 @@ describe('Should pass tests', () => {
         expect(container.find('p.errorMsg').text()).toBe(error);
       });
 
-
-
-
-
-
     });
-
-
-
 
   });
 
 
   // Integrations!
 
-
   describe('Should pass our beautiful integration tests', () => {
-
 
     it('Should create a new form', () => {
       const container = mount(<App />);
@@ -112,7 +98,6 @@ describe('Should pass tests', () => {
       expect(container.find('li').length).toBe(5);
       expect(container.find('span.user').at(4).text()).toBe('Johnson, John: 21 (test@gmail.com)');
     });
-
 
     it('Should clear new form when clicking Clear Fields button', () => {
       const container = mount(<App />);
@@ -127,7 +112,6 @@ describe('Should pass tests', () => {
       expect(container.find('input[name="lastname"]').props().value).toBe('');
       expect(container.find('input[name="email"]').props().value).toBe('');
     });
-
 
     it('Should throw a validation error if email is wrong', () => {
       const container = mount(<App />);
@@ -148,7 +132,6 @@ describe('Should pass tests', () => {
       expect(container.find('.errorMsg').text()).toBe('This field must be an e-mail address');
     });
 
-
     it('Should edit a form', () => {
       const container = mount(<App />);
       container.find('button.edit').at(0).simulate('click');
@@ -162,10 +145,6 @@ describe('Should pass tests', () => {
     });
 
   });
-
-
-
-
 
 });
 
