@@ -17,7 +17,7 @@ const error = 'I am error';
 
 describe('Should pass tests', () => {
 
-  // Hellowording my tests
+  // hello word to my tests!
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<App />, div);
