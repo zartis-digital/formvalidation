@@ -16,4 +16,4 @@ export default ({ name, handleBlur, handleChange, label, value, error }) => (
     />
     { error && (<p className="errorMsg">{ error }</p>) }
   </label>
-)
+);

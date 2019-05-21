@@ -19,4 +19,4 @@ export default ({ name, handleChange, value, error, values, label }) => (
     </select>
     { error && (<p className="errorMsg">{ error }</p>) }
   </label>
-)
+);

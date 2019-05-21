@@ -1,6 +1,6 @@
 import React from 'react';
-import UserContext from './context'
-import { UserList } from './userList'
+import UserContext from './context';
+import { UserList } from './userList';
 import Form from './form';
 
 const initUsers = [
@@ -8,10 +8,10 @@ const initUsers = [
   { name: 'Paul',    lastname: 'Dow',      id: 2, email: 'paul@yahoo.com',    age: 20 },
   { name: 'Luke',    lastname: 'Johnson',  id: 3, email: 'luke@yahoo.com',    age: 19 },
   { name: 'Matthew', lastname: 'Richards', id: 4, email: 'matthew@yahoo.com', age: 21 },
-]
+];
 
 function App() {
-  const [users, setUsers] = React.useState(initUsers)
+  const [users, setUsers] = React.useState(initUsers);
 
   const updateData = ({ name, lastname, email, age, id }) => {
     const index = users.findIndex(
@@ -21,18 +21,18 @@ function App() {
       setUsers([
         ...users,
         ({ name, lastname, email, age, id: users.length + 1 }) 
-      ])
+      ]);
     } else {
       setUsers([
         ...users.map(user => {
           if (user.id === id) {
-            return ({ name, lastname, email, age, id })
+            return ({ name, lastname, email, age, id });
           }
-          return user
+          return user;
         })
-      ])
+      ]);
     }
-  }
+  };
  
   return (
     <div className="App">

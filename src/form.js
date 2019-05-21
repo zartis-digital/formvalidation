@@ -55,5 +55,5 @@ export default (user) => {
       <input type="submit" disabled={ !canSubmit } />
       <button type="button" className="clear" onClick={ clearFields }>Clear fields</button>
     </form>
-  )
-}
+  );
+};

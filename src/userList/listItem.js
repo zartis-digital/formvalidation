@@ -3,33 +3,33 @@ import Form from '../form';
 
 const ListItem = user => {
   const { name, lastname, age = 'n/a', email = 'n/a', id } = user;
-  const [isEditing, setIsEditing] = React.useState()
-  const container = React.useRef()
+  const [isEditing, setIsEditing] = React.useState();
+  const container = React.useRef();
 
   React.useEffect(
     () => {
       const handleClick = e => {
         if (!container.current.contains(e.target)) {
-          setIsEditing(false)
+          setIsEditing(false);
         }
-      }
+      };
 
       const cleanupListener = () => {
-        document.removeEventListener('mousedown', handleClick, false)
-      }
+        document.removeEventListener('mousedown', handleClick, false);
+      };
 
       if (isEditing) {
-        document.addEventListener('mousedown', handleClick, false)
+        document.addEventListener('mousedown', handleClick, false);
       } else {
-        cleanupListener()
+        cleanupListener();
       }
 
       // cleanup for when component unmounts
       return () => {
-        cleanupListener()
-      }
+        cleanupListener();
+      };
     }, [isEditing]
-  )
+  );
 
   return (
     <li key={ id } ref={ container }>
@@ -50,7 +50,7 @@ const ListItem = user => {
         )
       }
     </li>
-  )
-}
+  );
+};
 
-export default ListItem
+export default ListItem;

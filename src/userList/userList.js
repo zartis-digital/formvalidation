@@ -9,6 +9,6 @@ const UserList = ({ users }) => (
       users.map(user => <ListItem {...user} key={ user.id }/>)
     }
   </ul>
-)
+);
 
 export default UserList;

@@ -1,5 +1,5 @@
-import React from 'react'
+import React from 'react';
 
-const UserData = React.createContext({})
+const UserData = React.createContext({});
 
-export default UserData
+export default UserData;

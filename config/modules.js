@@ -1,9 +1,9 @@
-'use strict';
+
 
 const fs = require('fs');
 const path = require('path');
-const paths = require('./paths');
 const chalk = require('react-dev-utils/chalk');
+const paths = require('./paths');
 
 /**
  * Get the baseUrl of a compilerOptions object.
@@ -11,7 +11,7 @@ const chalk = require('react-dev-utils/chalk');
  * @param {Object} options
  */
 function getAdditionalModulePaths(options = {}) {
-  const baseUrl = options.baseUrl;
+  const {baseUrl} = options;
 
   // We need to explicitly check for null and undefined (and not a falsy value) because
   // TypeScript treats an empty string as `.`.
@@ -76,7 +76,7 @@ function getModules() {
   const additionalModulePaths = getAdditionalModulePaths(options);
 
   return {
-    additionalModulePaths: additionalModulePaths,
+    additionalModulePaths,
     hasTsConfig,
   };
 }
