@@ -1,13 +1,11 @@
 /* global expect, it, describe  */
-import Enzyme, { mount, render, shallow } from "enzyme";
+import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '../App';
-import Form from '../form';
 
-
-import { TextInput, DropDown, useValidation } from '../formUtils';
+import { TextInput, DropDown } from '../formUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -36,91 +34,68 @@ describe('Should pass tests', () => {
         const container = shallow(<TextInput
           handleChange={funcChange}
           handleBlur={funcBlur}
-        />)
+        />);
 
         container.find('input').simulate('change', { target: { name: 'name', value: 'John' } });
-        expect(funcChange).toHaveBeenCalled()
+        expect(funcChange).toHaveBeenCalled();
 
         container.find('input').simulate('blur');
-        expect(funcBlur).toHaveBeenCalled()
+        expect(funcBlur).toHaveBeenCalled();
 
-      })
+      });
 
 
       it('Should display an error when passed as prop', ()  => {
         const container = shallow(<TextInput
           error={error}
-        />)
+        />);
 
         expect(container.find('p.errorMsg').text()).toBe(error);
-      })
-    })
+      });
+    });
 
 
     describe('DropDown', () => {
 
       it('Should render even without values', ()  => {
-        const container = shallow(<DropDown/>)
-        expect(container.find('select').length).toBe(1)
+        const container = shallow(<DropDown/>);
+        expect(container.find('select').length).toBe(1);
 
-      })
+      });
 
       it('Should trigger onChange, onBlur when passed as props', ()  => {
         const container = shallow(<DropDown
           handleChange={funcChange}
           values={[10,20,30]}
-        />)
+        />);
         container.find('select').simulate('change', { target: { name: 'age', value: 20 } });
-        expect(funcChange).toHaveBeenCalled()
+        expect(funcChange).toHaveBeenCalled();
 
-      })
+      });
 
 
 
       it('Should display an error when passed as prop', ()  => {
         const container = shallow(<DropDown
           error={error}
-        />)
+        />);
         expect(container.find('p.errorMsg').text()).toBe(error);
-      })
+      });
 
 
 
 
 
 
-    })
-
-
-    describe('useValidation function',() => {
-      it('Should generate correctly', ()  => {
-
-        const validation = {
-          name: 'required',
-          email: 'email',
-          lastname: 'required',
-        };
-
-        const callback = jest.fn()
-
-        const test = mount(<div
-          props={
-            useValidation(validation, {}, callback)
-          }
-        />)
-
-        debugger;
-
-
-      })
-    })
+    });
 
 
 
-  })
+
+  });
 
 
-// Integrations!
+  // Integrations!
 
 
   describe('Should pass our beautiful integration tests', () => {
@@ -134,8 +109,8 @@ describe('Should pass tests', () => {
       container.find('select[name="age"]').simulate('change', { target: { name: 'age', value: 21 } });
       container.find('input[type="submit"]').simulate('submit');
 
-      expect(container.find("li").length).toBe(5);
-      expect(container.find('span.user').at(4).text()).toBe('Johnson, John: 21 (test@gmail.com)')
+      expect(container.find('li').length).toBe(5);
+      expect(container.find('span.user').at(4).text()).toBe('Johnson, John: 21 (test@gmail.com)');
     });
 
 
@@ -170,7 +145,7 @@ describe('Should pass tests', () => {
 
       container.find('input[type="submit"]').simulate('submit');
 
-      expect(container.find('.errorMsg').text()).toBe('This field must be an e-mail address')
+      expect(container.find('.errorMsg').text()).toBe('This field must be an e-mail address');
     });
 
 
@@ -183,7 +158,7 @@ describe('Should pass tests', () => {
       container.find('select[name="age"]').at(0).simulate('change', { target: { name: 'age', value: 22 } });
       container.find('input[type="submit"]').at(0).simulate('submit');
 
-      expect(container.find('span.user').at(0).text()).toBe('Thompson, Mark: 22 (blabla@gmail.com)')
+      expect(container.find('span.user').at(0).text()).toBe('Thompson, Mark: 22 (blabla@gmail.com)');
     });
 
   });
@@ -192,7 +167,7 @@ describe('Should pass tests', () => {
 
 
 
-})
+});
 
 
 
