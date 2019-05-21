@@ -6,7 +6,9 @@ const evalFns = {
   email:
     txt => {
       const re = /^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/;
-      if (!txt || txt.length === 0) return false;
+      if (!txt || txt.length === 0) {
+        return false
+      }
       return !re.test(String(txt).toLowerCase()) && 'This field must be an e-mail address';
     }
 }
@@ -22,7 +24,9 @@ const useValidation = (validation, initialState = {}, cb) => {
       .reduce(
         (acc, cur) => {
           const [key, value] = cur;
-          if (!touched.includes(key)) return acc;
+          if (!touched.includes(key)) {
+            return acc
+          }
           try {
             value
             .split(" ")
@@ -65,7 +69,9 @@ const useValidation = (validation, initialState = {}, cb) => {
 
   const handleBlur = e => {
     const { name } = e.target
-    if (touched.includes(name)) return
+    if (touched.includes(name)) {
+      return
+    }
     setTouched([
       ...touched,
       name,

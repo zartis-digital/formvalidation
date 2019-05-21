@@ -9,12 +9,24 @@ const ListItem = user => {
   React.useEffect(
     () => {
       const handleClick = e => {
-        if (!container.current.contains(e.target)) setIsEditing(false)
+        if (!container.current.contains(e.target)) {
+          setIsEditing(false)
+        }
       }
-      if (isEditing) document.addEventListener('mousedown', handleClick, false)
-      else document.removeEventListener('mousedown', handleClick, false)
-      return () => {
+
+      const cleanupListener = () => {
         document.removeEventListener('mousedown', handleClick, false)
+      }
+
+      if (isEditing) {
+        document.addEventListener('mousedown', handleClick, false)
+      } else {
+        cleanupListener()
+      }
+
+      // cleanup for when component unmounts
+      return () => {
+        cleanupListener()
       }
     }, [isEditing]
   )
