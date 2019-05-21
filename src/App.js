@@ -1,7 +1,6 @@
 import React from 'react';
 import UserContext from './context';
 import { UserList } from './userList';
-import Form from './form';
 
 const initUsers = [
   { name: 'Peter',   lastname: 'Smith',    id: 1, email: 'peter@zartis.com',   age: 21 },
@@ -42,7 +41,6 @@ function App() {
         }
       >
         <UserList users={ users } />
-        <Form />
       </UserContext.Provider>
     </div>
   );

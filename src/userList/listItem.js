@@ -38,7 +38,7 @@ const ListItem = user => {
         className="edit"
         type="button"
         disabled={ isEditing }
-        onClick={ () => setIsEditing(id) }
+        onClick={ () => setIsEditing(true) }
       >
         Edit
       </button>
