@@ -43,7 +43,7 @@ const ListItem = user => {
         Edit
       </button>
       {
-        isEditing === id && (
+        isEditing && (
           <Form
             {...user}
           />
