@@ -3,16 +3,32 @@ import Enzyme, { mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { act, renderHook } from 'react-hooks-testing-library';
+import { cleanup } from 'react-testing-library';
 import App from '../App';
 
-import { TextInput, DropDown } from '../formUtils';
+
+import { TextInput, DropDown, useValidation } from '../formUtils';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const funcChange = jest.fn();
 const funcBlur = jest.fn();
+const funcCallback = jest.fn();
 const error = 'I am error';
 
+const initialUser = {
+  name: 'Peter',
+  lastname: 'Smith',
+  id: 1,
+  email: 'peter@zartis.com',
+  age: 21
+};
+const validation = {
+  name: 'required',
+  email: 'email',
+  lastname: 'required',
+};
 
 describe('Should pass tests', () => {
 
@@ -83,54 +99,84 @@ describe('Should pass tests', () => {
   });
 
 
+  describe('Tests in hooks!', () => {
+
+    let handleChange;
+    let handleSubmit;
+    let clearFields;
+    let handleBlur;
+
+    let result;
+    let rerender;
+    let current;
+
+    beforeEach(() => {
+      cleanup();
+      jest.clearAllMocks();
+      ({ result, rerender } = renderHook(() => useValidation(validation, initialUser, funcCallback)));
+      ({ current } = result);
+      ({handleChange, handleSubmit, clearFields, handleBlur} = current);
+    });
+
+    it('Data should have the initial state', () => {
+      expect(result.current.data).toEqual(initialUser);
+    });
+
+    it('Should use setData to change name to Javier (from handleChange)', () => {
+      const changedName = 'Javier';
+      act(() => {
+        handleChange({target: {name: 'name',value:changedName}});
+      });
+      expect(result.current.data).toEqual({
+        ...initialUser,
+        name: changedName
+      });
+    });
+
+    it('Should return to initial data when clearFields is called', () => {
+      const changedName = 'Javier';
+      act(() => {
+        handleChange({target: {name: 'name',value:changedName}});
+        clearFields();
+      });
+      expect(result.current.data).toEqual({
+        ...initialUser
+      });
+    });
+
+
+    it('Should throw an error if a wrong email is added or the name field is empty', () => {
+      act(() => {
+        handleChange({target: {name: 'name',value:''}});
+        handleBlur({target: {name: 'name'}});
+      });
+      rerender(); // needed for getting updated the "canSubmit" value that is triggered by useEffect
+      expect(result.current.errors).toEqual({'name': 'This field is required'});
+      expect(result.current.canSubmit).toBe(false);
+
+      act(() => {
+        handleChange({target: {name: 'email',value:'yessmail'}});
+        handleBlur({target: {name: 'email'}});
+      });
+      rerender(); // needed for getting updated the "canSubmit" value that is triggered by useEffect
+      expect(result.current.errors).toEqual({'email': 'This field must be an e-mail address'});
+      expect(result.current.canSubmit).toBe(false);
+    });
+
+
+    it('Should do a callback when submitting', () => {
+      handleSubmit({
+        preventDefault: jest.fn(),
+      });
+      expect(result.current.canSubmit).toBe(true);
+      expect(funcCallback).toHaveBeenCalled();
+    });
+  });
+
+
   // Integrations!
 
   describe('Should pass our beautiful integration tests', () => {
-
-    it('Should create a new form', () => {
-      const container = mount(<App />);
-      container.find('input[name="name"]').simulate('change', { target: { name: 'name', value: 'John' } });
-      container.find('input[name="lastname"]').simulate('change', { target: { name: 'lastname', value: 'Johnson' } });
-      container.find('input[name="email"]').simulate('change', { target: { name: 'email', value: 'test@gmail.com' } });
-      container.find('select[name="age"]').simulate('change', { target: { name: 'age', value: 21 } });
-      container.find('input[type="submit"]').simulate('submit');
-
-      expect(container.find('li').length).toBe(5);
-      expect(container.find('span.user').at(4).text()).toBe('Johnson, John: 21 (test@gmail.com)');
-    });
-
-    it('Should clear new form when clicking Clear Fields button', () => {
-      const container = mount(<App />);
-      container.find('input[name="name"]').simulate('change', { target: { name: 'name', value: 'John' } });
-      container.find('input[name="lastname"]').simulate('change', { target: { name: 'lastname', value: 'Johnson' } });
-      container.find('input[name="email"]').simulate('change', { target: { name: 'email', value: 'test@gmail.com' } });
-      container.find('select[name="age"]').simulate('change', { target: { name: 'age', value: 21 } });
-
-      container.find('button.clear').simulate('click');
-
-      expect(container.find('input[name="name"]').props().value).toBe('');
-      expect(container.find('input[name="lastname"]').props().value).toBe('');
-      expect(container.find('input[name="email"]').props().value).toBe('');
-    });
-
-    it('Should throw a validation error if email is wrong', () => {
-      const container = mount(<App />);
-      container.find('input[name="name"]').simulate('change', { target: { name: 'name', value: 'John' } });
-      container.find('input[name="name"]').simulate('blur');
-
-      container.find('input[name="lastname"]').simulate('change', { target: { name: 'lastname', value: 'Johnson' } });
-      container.find('input[name="lastname"]').simulate('blur');
-
-      container.find('input[name="email"]').simulate('change', { target: { name: 'email', value: 'blabla' } });
-      container.find('input[name="email"]').simulate('blur');
-
-      container.find('select[name="age"]').simulate('change', { target: { name: 'age', value: 21 } });
-      container.find('select[name="age"]').simulate('blur');
-
-      container.find('input[type="submit"]').simulate('submit');
-
-      expect(container.find('.errorMsg').text()).toBe('This field must be an e-mail address');
-    });
 
     it('Should edit a form', () => {
       const container = mount(<App />);
